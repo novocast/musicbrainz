@@ -20,7 +20,7 @@ class Entity
 
     public $appId = null;
 
-    public function formatResponse($response)
+    public function formatResponse($response, $type = 'search')
     {
         return $response;
     }
@@ -29,7 +29,7 @@ class Entity
     public function __construct($config = null)
     {
         if ($config !== null) {
-            $this->appId = $config['user_agent'];
+            $this->appId = $config['id'];
         }
     }
 
@@ -37,9 +37,10 @@ class Entity
     {
         $response = null;
         if (in_array($name, $this->apiMethods)) {
-            $response = Api::$name($arguments);
+            $api = new Api();
+            $response = $api->$name(...$arguments);
         }
 
-        return $this->formatResponse($response);
+        return $response;
     }
 }

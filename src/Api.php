@@ -11,6 +11,10 @@
 
 namespace MusicBrainz;
 
+use GuzzleHttp\Client;
+use MakinaCorpus\Lucene\Query;
+
+
 class Api
 {
     private $endpoint = 'https://musicbrainz.org/ws/2/';
@@ -19,8 +23,86 @@ class Api
         'format' => 'json'
     ];
 
+    /**
+     *  lookup:   /<ENTITY_TYPE>/<MBID>?inc=<INC>
+     *  browse:   /<RESULT_ENTITY_TYPE>?<BROWSING_ENTITY_TYPE>=<MBID>&limit=<LIMIT>&offset=<OFFSET>&inc=<INC>
+     *  search:   /<ENTITY_TYPE>?query=<QUERY>&limit=<LIMIT>&offset=<OFFSET>
+     */
 
-    public function callApi($entity, $method, $arguments, $settings = null)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $entity
+     * @param [type] $arguments
+     * @param [type] $settings
+     * @return void
+     */
+    public function lookup($entity, $arguments, $settings = null)
+    {
+        /**
+         * @todo This is duplicate of search. Redo as Lookup
+         */
+
+        $url = $this->endpoint . $entity . "/$arguments[0]" . "?inc=isrcs";
+
+        return $this->callApi($url, $settings);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $entity
+     * @param [type] $arguments
+     * @param [type] $settings
+     * @return void
+     */
+    public function browse($entity, $arguments, $settings = null)
+    {
+        /**
+         * @todo This is duplicate of search. Redo as Browse
+         */
+
+        $query = new Query();
+
+        foreach ($arguments[0] as $field => $value) {
+            $query->matchTerm($field, $value);
+        }
+
+        $url = $this->endpoint . $entity . "?query=$query&limit=5&offset=0" . '';
+
+        return $this->callApi($url, $settings);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $entity
+     * @param [type] $arguments
+     * @param [type] $settings
+     * @return void
+     */
+    public function search($entity, $arguments, $settings)
+    {
+        $query = new Query();
+
+        foreach ($arguments[0] as $field => $value) {
+            $query->matchTerm($field, $value);
+        }
+
+        $url = $this->endpoint . $entity . "?query=$query&limit=5&offset=0" . '';
+
+        return $this->callApi($url, $settings);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $entity
+     * @param [type] $arguments
+     * @param [type] $settings
+     * @return void
+     */
+    public function callApi($url, $settings = null)
     {
         $config = $this->config;
 
@@ -28,40 +110,20 @@ class Api
             $config = array_merge($config, $settings);
         }
 
-        $jsonString = '&fmt=json';
-
-        $url = $this->endpoint . $entity;
-
-        //Create an array of custom headers.
         $customHeaders = [
-            'User-Agent: ' . $config['id']
+            'User-Agent' => $config['id']
         ];
 
         if ($config['format'] === 'json') {
-            $url .= $jsonString;
-            $customHeaders[] = 'Accept: application/json';
+            $url .= '&fmt=json';
+            $customHeaders['Accept'] = 'application/json';
         }
 
-        var_dump($customHeaders);
-        var_dump($url);
-        exit();
+        $client = new Client();
+        $res = $client->request('GET', $url, [
+            'headers' => $customHeaders
+        ]);
 
-        //Create a cURL handle.
-        $ch = curl_init($this->endpoint);
-
-        //Use the CURLOPT_HTTPHEADER option to use our
-        //custom headers.
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $customHeaders);
-
-        //Set options to follow redirects and return output
-        //as a string.
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-
-        //Execute the request.
-        $result = curl_exec($ch);
-
-        var_dump($result);
-        exit();
+        return json_decode($res->getBody());
     }
 }
