@@ -1,0 +1,30 @@
+{
+  "name": "novocast/musicbrainz",
+  "description": "Wrapper for Musicbrainz API v2",
+  "keywords": [
+    "musicbrainz",
+    "api",
+    "artists",
+    "tracks",
+    "albums",
+    "isrc"
+  ],
+  "homepage": "http://github.com/novocast/musicbrainz",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anthony Totton",
+      "email": "novocast7@gmail.com",
+      "homepage": "http://anthonytotton.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MusicBrainz\\": "src/Monolog"
+    }
+  }
+}
