@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MusicBrainz;
+namespace MusicBrainz\Entity;
 
 use MusicBrainz\Api;
 
@@ -18,9 +18,19 @@ class Entity
     protected $apiMethods = ['lookup', 'browse', 'search'];
     public $isCoreResource = true;
 
+    public $appId = null;
+
     public function formatResponse($response)
     {
         return $response;
+    }
+
+
+    public function __construct($config = null)
+    {
+        if ($config !== null) {
+            $this->appId = $config['user_agent'];
+        }
     }
 
     public function __call($name, $arguments)
