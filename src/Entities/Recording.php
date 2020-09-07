@@ -21,15 +21,12 @@ class Recording extends Entity
     public function formatResponse($response, $type = 'search')
     {
         if ($type === 'lookup') {
-
-            var_dump($response);
-            exit();
+            return $response;
         }
 
         if ($type === 'browse') {
 
-            var_dump($response);
-            exit();
+            return $response->recordings;
         }
 
         if ($response->recordings) {
