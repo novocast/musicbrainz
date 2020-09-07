@@ -28,5 +28,21 @@
     "psr-4": {
       "MusicBrainz\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MusicBrainz\\": [
+        "src/",
+        "tests/"
+      ]
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.2"
+  },
+  "scripts": {
+    "test": [
+      "phpunit"
+    ]
   }
 }

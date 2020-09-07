@@ -68,6 +68,11 @@ class Api
             $query->matchTerm($field, $value);
         }
 
+        /**
+         * This line fixes an issue with wildcard searching in the php-lucene library
+         */
+        $query = str_replace(':"\*"', ":*", $query);
+
         $url = $this->endpoint . $entity . "?query=$query&limit=5&offset=0" . '';
 
         return $this->callApi($url, $settings);
@@ -119,10 +124,17 @@ class Api
             $customHeaders['Accept'] = 'application/json';
         }
 
-        $client = new Client();
-        $res = $client->request('GET', $url, [
+        $requestConfig = [
+            'verify' => false,
             'headers' => $customHeaders
-        ]);
+        ];
+
+        if (isset($config['proxy'])) {
+            $requestConfig['proxy'] = $config['proxy'];
+        }
+
+        $client = new Client();
+        $res = $client->request('GET', $url, $requestConfig);
 
         return json_decode($res->getBody());
     }
