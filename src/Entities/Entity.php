@@ -17,8 +17,9 @@ class Entity
 {
     protected $apiMethods = ['lookup', 'browse', 'search'];
     public $isCoreResource = true;
-
     public $appId = null;
+
+
 
     public function formatResponse($response, $type = 'search')
     {
@@ -28,6 +29,9 @@ class Entity
 
     public function __construct($config = null)
     {
+        /**
+         * Sets config ID as app ID
+         */
         if ($config !== null) {
             $this->appId = $config['id'];
         }
