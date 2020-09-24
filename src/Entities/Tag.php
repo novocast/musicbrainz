@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace MusicBrainz;
+namespace MusicBrainz\Entity;
 
-use MusicBrainz\Entity;
+use MusicBrainz\Entity\Entity;
 
 class Tag extends Entity
 {
