@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the MusicBrainz package.
+ * This file is part of the Musicbrainz package.
  *
  * © Anthony Totton <novocast7@gmail.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MusicBrainz;
+namespace Musicbrainz;
 
 use GuzzleHttp\Client;
 use MakinaCorpus\Lucene\Query;

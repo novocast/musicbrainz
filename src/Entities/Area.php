@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the MusicBrainz package.
+ * This file is part of the Musicbrainz package.
  *
  * © Anthony Totton <novocast7@gmail.com>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace MusicBrainz\Entity;
+namespace Musicbrainz\Entity;
 
-use MusicBrainz\Entity\Entity;
+use Musicbrainz\Entity\Entity;
 
 class Area extends Entity
 {

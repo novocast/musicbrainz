@@ -1,6 +1,6 @@
 <?php
 
-namespace MusicBrainz;
+namespace Musicbrainz;
 
 use PHPUnit\Framework\TestCase;
 

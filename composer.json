@@ -26,12 +26,12 @@
   },
   "autoload": {
     "psr-4": {
-      "MusicBrainz\\": "src/"
+      "Musicbrainz\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "MusicBrainz\\": [
+      "Musicbrainz\\": [
         "src/",
         "tests/"
       ]
