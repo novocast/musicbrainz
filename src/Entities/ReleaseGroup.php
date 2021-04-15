@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Musicbrainz\Entity;
+namespace Musicbrainz\Entities;
 
-use Musicbrainz\Entity\Entity;
+use Musicbrainz\Entities\Entities;
 
 class ReleaseGroup extends Entity
 {
