@@ -86,7 +86,7 @@ class Api
      * @param [type] $settings
      * @return void
      */
-    public function search($entity, $arguments, $settings)
+    public function search($entity, $arguments, $settings = null)
     {
         $query = new Query();
 
