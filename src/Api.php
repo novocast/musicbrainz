@@ -18,6 +18,7 @@ use MakinaCorpus\Lucene\Query;
 class Api
 {
     private $endpoint = 'https://musicbrainz.org/ws/2/';
+    private $coverEndpoint = 'https://coverartarchive.org/';
     private $config = [
         'id' => '',
         'format' => 'json'
@@ -42,8 +43,14 @@ class Api
         /**
          * @todo This is duplicate of search. Redo as Lookup
          */
+        $endpoint = $this->endpoint;
+        $entityCode = $entity;
+        if ($entity === 'cover-art') {
+            $endpoint = $this->coverEndpoint;
+            $entityCode = 'release';
+        }
 
-        $url = $this->endpoint . $entity . "/$arguments[0]" . "?inc=isrcs";
+        $url = $endpoint . $entityCode . "/$arguments[0]" . "?inc=isrcs";
 
         return $this->callApi($url, $settings);
     }
