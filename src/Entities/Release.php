@@ -11,10 +11,42 @@
 
 namespace Musicbrainz\Entities;
 
-use Musicbrainz\Entities\Entities;
-
 class Release extends Entity
 {
 
     public $entity = 'release';
+
+    public function formatResponse($response, $type = 'search')
+    {
+        if ($type === 'lookup') {
+            return $response;
+        }
+
+        if ($type === 'browse') {
+
+            return $response->releases;
+        }
+
+        if ($response->releases) {
+            return $response->releases;
+        }
+
+        return null;
+    }
+
+    /**
+     * Calls the api with the requested data and formats the response
+     *
+     * @param [type] $name
+     * @param [type] $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        return $this->formatResponse(parent::__call($name, [
+            $this->entity,
+            $arguments,
+            ['id' => $this->appId]
+        ]), $name);
+    }
 }
